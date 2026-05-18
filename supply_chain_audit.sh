@@ -357,7 +357,7 @@ check_known_malicious() {
             fi
         done
 
-        local -a search_dirs=("${SCAN_DIRS[@]}")
+        local -a search_dirs=("${SCAN_DIRS[@]+"${SCAN_DIRS[@]}"}")
         [[ ${#search_dirs[@]} -eq 0 ]] && search_dirs=(".")
 
         for dir in "${search_dirs[@]}"; do
@@ -454,7 +454,7 @@ audit_npm_projects() {
     fi
 
     local found_projects=0
-    local -a search_roots=("${SCAN_DIRS[@]}")
+    local -a search_roots=("${SCAN_DIRS[@]+"${SCAN_DIRS[@]}"}")
 
     if [[ ${#search_roots[@]} -eq 0 ]]; then
         if [[ "$IS_CI" == true || "$IS_CONTAINER" == true ]]; then
@@ -713,7 +713,7 @@ print(f'TOTAL|{vuln_count}|0')
 scan_virtualenvs() {
     header "Python Virtual Environments"
 
-    local -a search_roots=("${SCAN_DIRS[@]}")
+    local -a search_roots=("${SCAN_DIRS[@]+"${SCAN_DIRS[@]}"}")
     [[ ${#search_roots[@]} -eq 0 ]] && search_roots=("$(pwd)")
 
     local found_venvs=0
